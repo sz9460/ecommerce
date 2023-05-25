@@ -1,0 +1,47 @@
+server:
+  port: 7777
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: TRACE
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8888/eureka
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: ms-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: route1
+          predicates:
+            - Path=/authentication/**
+          filters:
+            - RewritePath=/authentication/(?<s>.*), /${s}
+          uri: lb://ms-authentication
+        - id: route2
+          predicates:
+            - Path=/product/**
+          filters:
+            - RewritePath=/product/(?<s>.*), /${s}
+          uri: lb://ms-product
+        - id: route3
+          predicates:
+            - Path=/payemant/**
+          filters:
+            - RewritePath=/payemant/(?<s>.*), /${s}
+          uri: lb://ms-payement
+        - id: route4
+          predicates:
+            - Path=/order/**
+          filters:
+            - RewritePath=/order/(?<s>.*), /${s}
+          uri: lb://ms-order
+

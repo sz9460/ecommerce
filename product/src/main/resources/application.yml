@@ -1,0 +1,15 @@
+server:
+  port: 8087
+spring:
+  application:
+    name: ms-product
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/products
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8888/eureka
